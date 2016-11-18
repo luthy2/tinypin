@@ -1,5 +1,5 @@
 web: gunicorn app:app
-init: python __init__.py db init
-migrate: python __init__.py db migrate
-upgrade: python __init__.py db upgrade
+init: python db_repository/manage.py init
+migrate: python db_repository/manage.py migrate
+upgrade: python db_repository/manage.py upgrade
 worker: celery -A app.celery worker
