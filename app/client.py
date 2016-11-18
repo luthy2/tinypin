@@ -2,7 +2,7 @@ import requests
 import lassie
 from flask import render_template, render_template_string
 import tasks
-from app import cli, celery, redis_cache
+from app import cli, redis_cache
 
 
 def cache_request(urls):

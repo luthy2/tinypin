@@ -1,9 +1,9 @@
-from app import app, cli, redis_cache
+from app import app, cli, redis_cache, celery
 
 
 
 
-@app.task
+@celery.task
 def cache_urls(urls):
   not_cached_urls = []
   for u in urls:
