@@ -17,8 +17,8 @@ GOOGLE_SECRET = "ERSwX1R1kmLnzabq-IwfF3DQ"
 
 EMBEDLY_KEY = '7cc09b03ae3b48c5b8025541369b22c3'
 
-# SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
-# SQLALCHEMY_RECORD_QUERIES = True
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+SQLALCHEMY_RECORD_QUERIES = True
 
 CELERY_BROKER = os.environ.get("REDIS_URL")
 CELERY_REDIS_MAX_CONNECTIONS = 20
