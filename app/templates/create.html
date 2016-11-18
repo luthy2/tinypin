@@ -1,0 +1,203 @@
+<!doctype html>
+{%extends "base.html"%}
+{%block content%}
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<style type="text/css">
+  img{
+    width:100%;
+    overflow:hidden;
+  }
+  form{
+    width:100%;
+  }
+iframe{
+  width:100%;
+  height:auto;
+}
+
+</style>
+<div class="container" ng-app="collectionApp" ng-cloak>
+  {% raw %}
+  <div ng-controller="CollectionController">
+    <div class="row">
+      <div class="col-xs-12 col-md-6">
+        <h4>Create a Collection
+          <small>
+            <span class="text-danger" ng-show="urlForm.url.$error.url">hmm this doesnt seem like a url</span>
+            <span class="text-warning" ng-show="urlForm.url.$error.required">you have to add a url!</span>
+          </small>
+        </h4>
+        <form class="titleForm">
+          <input class="form-control" placeholder="give your collection a title" type="text" ng-model= "title" name="title" ng-model-options="{ updateOn: 'blur' }" required>
+        </form>
+        <form novalidate class="url-form" name="urlForm" style="padding-top:1%;">
+          <div class="form-group">
+            <input id="urlInput" class="form-control" placeholder="http://www.example.com" type="url" ng-model="url" name="url" ng-model-options="{ updateOn: 'blur' }" required>
+            <span class="pull-right" style="padding-top:1%;"><input id = "add" class="btn btn-default" type="submit" ng-click="add(url, urlForm.url.$valid)" value="+"></span>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row pad-bottom-2">
+      <div class="col-sm-9">
+        <h2>{{title}} <small>preview</small></h2>
+        <div class="row masonry">
+            <div id = "items">
+              <div ng-repeat="item in items track by $index" class="col-sm-4 item item-width">
+                <a class= "link-embed hidden" href = {{item}}>{{item}} </a><span id="removeButton" ng-click="remove(item)"> [remove]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div id = "submitFooter">
+            Layout
+            <div class = "btn-group" role="group">
+              <button class="btn btn-default btn-sm" id="toggleOne" ng-click=setLayout('one')><span class="glyphicon glyphicon-list"></span></button>
+              <button class="btn btn-default btn-sm" id ="toggleTwo" ng-click=setLayout('two')><span class="glyphicon glyphicon-th-large"></span></button>
+              <button class="btn btn-default btn-sm" id ="toggleThree" ng-click=setLayout('three')><span class="glyphicon glyphicon-th"></span></button>
+            </div>
+            <span data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="Note: you must be logged in order to edit this board in the future! Anon boards are only viewable by their shortlink, so if you are worried about losing this board you should sign in!">
+              <input class="btn btn-default" type="button" ng-click="submit()" value="Publish Collection"/>
+            </span>
+            <label for="privateCheckbox">
+              Public
+              <input id="privateCheckbox" type="checkbox" ng-model="public"/></label>
+          </div>
+        </div>
+      </div>
+    </div> <!---ng-controllor-->
+  </div> <!---angular app-------->
+  {% endraw %}
+  <script>
+    angular.module('collectionApp', [])
+      .controller('CollectionController', ['$scope' ,'$http', '$q', '$window', function ($scope, $http,$q,$window) {
+        $scope.items = [];
+        $scope.url = ''
+        $scope.title = ''
+        $scope.public = true
+        $scope.background_color = ''
+        $scope.layout = ''
+
+        var api_base='http://localhost:5000/api/1/'
+
+        //pull the collection from the server and populate it if it exists
+        var board_id = window.location.pathname.split('/')[2]
+        console.log(board_id)
+        $http({
+          method:"POST",
+          url:api_base+'boards/items',
+          data:{"unique_id":board_id}
+        }).then(function success(response){
+          $scope.items = $scope.items.concat(response.data.items)
+          $scope.title = response.data.title
+          console.log(response.data)
+        }), function error(response){
+          console.log("we had an error with your request.")
+          console.log(response)
+        }
+
+        $scope.setTitle = function(title, form){
+          if (form){
+            $scope.title = title
+            console.log($scope.title)
+          }
+        }
+
+        $scope.setLayout = function(layout){
+          $scope.layout = layout
+        }
+
+        $scope.add = function(url, form) {
+          if (form){
+            $scope.items.push(url);
+            $scope.urlForm.$setPristine();
+            $scope.urlForm.$setUntouched();
+            $scope.url = ''
+            console.log($scope.items)
+          }
+        };
+
+        $scope.remove = function(item){
+          var i = $scope.items.indexOf(item)
+          $scope.items.splice(i, 1)
+        }
+
+        $scope.submit = function(){
+          collection = {'title':$scope.title, 'is_public':$scope.public, 'items' : $scope.items, 'unique_id': board_id, 'layout':$scope.layout}
+          $http ({
+            method:'POST',
+            url: api_base + 'boards/create',
+            data: collection
+          }).then(function success(response){
+            console.log(response)
+            $scope.alert = "Collection succesfully created"
+            $window.location.href=response.data.uri
+          }), function error(response){
+            $scope.alert = "We had a problem creating your collection. Try again!"
+            console.log(response);
+          };
+        };
+      }]);
+  </script>
+  <script type="text/javascript">
+    var $container = $('.masonry')
+    $container.imagesLoaded(function(){
+      $container.masonry({
+        itemSelector:'.item',
+        columnWidth:'.item',
+        percentPosition:true,
+      })
+    });
+    $container.masonry('layout')
+    // select the target node
+    var target = document.getElementById('items');
+
+    // create an observer instance
+    var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      $('.link-embed').embedly({key: '7cc09b03ae3b48c5b8025541369b22c3'}, words = 15);
+      $container.masonry('reloadItems')
+      $container.masonry('layout')
+    });
+  });
+
+    // configuration of the observer:
+    var config = { attributes: true, childList: true, characterData: true };
+
+    // pass in the target node, as well as the observer options
+    observer.observe(target, config);
+
+    $("#toggleThree").click(function(){
+      $(".item-width").removeClass('col-sm-6 col-sm-offset-3')
+      $(".item-width").addClass('col-sm-4')
+      $(".item-width").css("margin-bottom","0")
+      $(this).addClass('btn-selected')
+      $("#toggleOne").removeClass('btn-selected')
+      $("#toggleTwo").removeClass('btn-selected')
+      $container.masonry('layout')
+    })
+    $("#toggleOne").click(function(){
+      $(".item-width").removeClass('col-sm-4')
+      $(".item-width").addClass('col-sm-6 col-sm-offset-3')
+      $(".item-width").css("margin-bottom","20px")
+      $(this).addClass('btn-selected')
+      $("#toggleThree").removeClass('btn-selected')
+      $("#toggleTwo").removeClass('btn-selected')
+      $container.masonry('layout')
+    })
+    $("#toggleTwo").click(function(){
+      $(".item-width").removeClass('col-sm-4 col-sm-offset-3')
+      $(".item-width").addClass('col-sm-6')
+      $(".item-width").css("margin-bottom","20px")
+      $(this).addClass('btn-selected')
+      $("#toggleOne").removeClass('btn-selected')
+      $("#toggleThree").removeClass('btn-selected')
+      $container.masonry('layout')
+      console.log($container)
+    })
+  </script>
+</body>
+{%endblock%}

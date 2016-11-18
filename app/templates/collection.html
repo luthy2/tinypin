@@ -1,0 +1,141 @@
+{% extends "base.html"%}
+{% block content%}
+<script src="https://cdn.embed.ly/jquery.embedly-3.1.1.min.js"></script>
+<script src="http://cdn.embed.ly/jquery.preview-0.3.2.min.js" type="text/javascript"></script>
+<!-- <link rel="stylesheet" href="http://cdn.embed.ly/jquery.preview-0.3.2.css"/> -->
+<style>
+  body{
+    background-color: {{collection.background_color}};
+  }
+  iframe{
+    width:100%;
+    height:auto;
+  }
+</style>
+<script>
+// Twitter widget is loading.
+  window.twttr = function (d, s, id) {
+  var t, js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return; js = d.createElement(s); js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+  return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+  }(document, 'script', 'twitter-wjs');
+
+  twttr.events.bind('loaded', function (event) {
+      event.widgets.forEach(function (widget) {
+        $container.masonry("layout")
+      });
+    }
+  );
+</script>
+<div class="container">
+  <div id="loader" class="loader">Loading...</div>
+  <div class="row" id ="collectionMain">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="row">
+        <div class="col-xs-12">
+        {% if collection%}
+            {% if collection.title %}
+              <h1>
+                {{collection.title}}
+                <small>
+                  {% if collection.is_public %}
+                    <a class="link-no-style" href="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is public. Anyone can view it.">
+                       🔓
+                    </a>
+                    {%else%}
+                      <a class="link-no-style" href ="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is private. It is hidden from search indexes, and only those with the unique url can view it.">
+                         🔒
+                      </a>
+                    {%endif%}
+                  <a href ="{{url_for('edit', unique_id=collection.unique_id)}}">
+                    {% if g.user and collection.creator == g.user %}edit{%endif%}
+                  </small>
+                </a>
+              </h1>
+            {% else %}
+              <h1>Untitled                  <small> {% if collection.is_public %}
+                                  <span data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is public. Anyone can view it.">
+                                     🔓
+                                  </span>
+                                  {%else%}
+                                    <a class="link-no-style" href ="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is private. It is hidden from search indexes, and only those with the unique url can view it.">
+                                       🔒
+                                    </span>
+                                  {%endif%}
+                                </small>
+                                  {% if g.user and collection.creator == g.user %}<a href ="{{url_for('edit', unique_id = collection.unique_id)}}"><small>edit</small>{%endif%}</a></h1>
+            {% endif %}
+            <ul class="list-inline board-details">
+              <li>
+                <p style="color:gray;">
+                  by {% if collection.creator %}<a href="{{url_for('user', username= collection.creator.username)}}">{{collection.creator.username}}</a>{%else%}Anon{%endif%}
+                </p>
+              </li>
+              <li>
+                {{collection.collection_items.all()|count}} items
+              </li>
+              <li>
+                {%if collection.timestamp%}{{collection.fmt_timestamp()}} {%endif%}
+              </li>
+              <li><p>Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></span></p></li>
+              <li>
+                <div class = "btn-group pull-right" role="group">
+                  <button class="btn btn-default btn-sm" id="toggleOne"><span class="glyphicon glyphicon-list"></span></button>
+                  <button class="btn btn-default btn-sm" id ="toggleTwo"><span class="glyphicon glyphicon-th-large"></span></button>
+                  <button class="btn btn-default btn-sm" id ="toggleThree"><span class="glyphicon glyphicon-th"></span></button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+       <div class="masonry row">
+         {% set items = collection.collection_items%}
+          {% include "collection_items.html"%}
+      </div>
+    {% else%}
+    <p>Hmm, we couldn't find the collection. It might be private! Or maybe it doesnt exist.</p>
+    {%  endif %}
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $("#toggleThree").click(function(){
+  	$(".item").removeClass('col-sm-6 col-sm-offset-3')
+  	$(".item").addClass('col-sm-4')
+    $(".item").css("margin-bottom","0")
+    $container.masonry('layout')
+  })
+  $("#toggleOne").click(function(){
+  	$(".item").removeClass('col-sm-4')
+  	$(".item").addClass('col-sm-6 col-sm-offset-3')
+    $(".item").css("margin-bottom","20px")
+    $container.masonry('layout')
+  })
+  $("#toggleTwo").click(function(){
+    $(".item").removeClass('col-sm-4 col-sm-offset-3')
+    $(".item").addClass('col-sm-6')
+    $(".item").css("margin-bottom","20px")
+    $container.masonry('layout')
+    console.log($container)
+  })
+
+  var $container = $(".masonry")
+  $(window).on('load', function(){
+    $container.imagesLoaded(function(){
+      $container.masonry({
+        itemSelector:'.item',
+        columnWidth:'.item',
+        percentPosition:true,
+      })
+      $container.masonry('layout')
+    })
+    $("#loader").hide()
+    $("#collectionMain").show()
+    console.log('layout render')
+  });
+</script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582b644f396174ac"></script>
+{% endblock%}

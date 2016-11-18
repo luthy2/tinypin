@@ -1,0 +1,9 @@
+{%if youtube%}
+<div class="embed-responsive embed-responsive-16by9">
+  {{content|safe}}
+</div>
+{%else%}
+<div class="video-container" style="padding-bottom:{{ratio}}%">
+  {{content|safe}}
+</div>
+{%endif%}

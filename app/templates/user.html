@@ -1,0 +1,58 @@
+{%extends "base.html"%}
+{% block content%}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>{{user.username}} {% if user.username|string()==g.user.username|string()%}(you) <small><a href = "{{url_for('edit_user', username = user.username)}}"> settings</a></small></h4>{%else%} <small>Public Boards</small>{%endif%}
+    </div>
+  </div>
+  <div class="row">
+  {% if user.username|string()==g.user.username|string()%}
+    {% for collection in user.collections%}
+      <div class="col-md-3 col-sm-4">
+        <div class="panel panel-default board-card">
+          <div class="panel-body" style="margin-bottom:75px;">
+            <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" style="display:block;">
+              <h5 style="margin-bottom:auto">{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h5>
+            </a>
+            <p><small>{{collection.collection_items.all()|count}} items {% if collection.is_public%}public 🔓{%else%} private 🔐{%endif%}</small></p>
+          </div>
+          <div class="panel-footer text-align text-right" style="border-top:none; background-color:white;">
+            <div class="btn-group dropup">
+              <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="glyphicon glyphicon-option-horizontal"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="{{url_for('edit', unique_id = collection.unique_id)}}">Edit Board</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{url_for('delete_collection', username = user.username, unique_id = collection.unique_id)}}"><span class="text-danger">Delete Board</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="col-md-6 col-md-offset-3 text-align text-center" style="padding-top:10%;">
+          <h4>No boards yet 😕 </h4><a class="btn btn-default" href = "{{url_for('create')}}">New Board</a>
+          <p>When you create a board, all of your boards will show up here, and you will be able to edit them.</p>
+      </div>
+    {% endfor%}
+  {%else%}
+    {% for collection in user.collections%}
+      {% if collection.is_public %}
+      <div class="col-md-3" >
+        <div class="panel panel-default board-card" style="height:200px;">
+          <div class="panel-body">
+            <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}">
+              <h5>{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h5>
+            </a>
+            <p>{{collection.collection_items.all()|count}} items</p>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {%endfor%}
+  {%endif%}
+  </div>
+</div>
+{% endblock %}

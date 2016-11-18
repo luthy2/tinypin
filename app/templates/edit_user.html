@@ -1,0 +1,26 @@
+{%extends "base.html"%}
+{% block content%}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h4>Logged in as {{user.username}} <small>{{user.email}}</small> <a type="button" class="btn btn-default btn-xs btn-logout" href = "{{url_for('logout')}}">Logout</a></h4>
+      <div class="row">
+        <div class="col-xs-12">
+          <h5>Edit Settings</h5>
+          <form>
+            {{form.hidden_tag()}}
+            <div class="form-group">
+              <label for="username">Display Name</label>
+              {{form.username_field(class_="form-control", placeholder="jsmith5", id="username")}}
+            </div>
+            <label for="email">Email address</label>
+            <div class="form-group">
+              {{form.email_field( class_="form-control", placeholder="jsmith@example.com", id="email")}}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

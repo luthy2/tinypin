@@ -1,0 +1,9 @@
+{% for item in items%}
+  <div class="{{collection.collection_layout}} item">
+    {{item.render() | safe}}
+  </div>
+{% else %}
+<div class="col-xs-12">
+  <p>You haven't added any items to this collection yet.</p>
+</div>
+{% endfor %}

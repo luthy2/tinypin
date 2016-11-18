@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{%extends "base.html"%}
+{% block content %}
+<style>
+  body{padding-top:50px;}
+</style>
+
+<div class="container-fluid img-overlay">
+  <div class="row text-align text-center ">
+    <div class="col-xs-12" style="color:white; margin-top:10%;">
+      <h1>A simple collection creator</h1>
+      <p class="lead-text">Get started now. No sign up required.</p>
+    </div>
+  </div>
+  <div class="row text-align text-center">
+    <div class="col-md-6 col-md-offset-3">
+      <a class="btn btn-lg btn-default" href="{{url_for('create')}}">New Board</a>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row pad-top">
+    <div class="col-md-4">
+      <h3 class="text-align text-center">Make What You Want</h3>
+      <p>Tinypin is a minimal tool to create collections of links, or "boards". Simply add links into your collection, and they will be automatically embedded. Add articles, images, videos, audio, tweets, and more.</p>
+    </div>
+    <div class="col-md-4">
+      <h3 class="text-align text-center">Make it yours</h3>
+      <p>It's a simple framework, but your options are only limited by your creativity. There is no wrong way to use it! one Use tinypin to make buzzfeed style listicles, reading lists to share with your team, personal inspiration boards for your projects. You could even run a blog or a magazine.</p>
+    </div>
+    <div class="col-md-4">
+      <h3 class="text-align text-center">Show it off</h3>
+      <p>Share your boards, or don't. Make public boards, or hide your boards. If you create an account, you will be able to update and edit your boards. If you just need to throw something together quickly, thats cool too! You don't need an account to make a board and share it.</p>
+    </div>
+  </div>
+  <div class="row text-align text-center pad-top pad-bottom">
+    <div class="col-md-6 col-md-offset-3">
+      <h2>What will you make?</h2>
+      <a href ="{{url_for('user', username = 'staff')}}"> check out some examples</a>
+    </div>
+  </div>
+</div>
+{%include "footer.html"%}
+{% endblock %}
