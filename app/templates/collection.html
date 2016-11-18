@@ -80,13 +80,6 @@
                 {%if collection.timestamp%}{{collection.fmt_timestamp()}} {%endif%}
               </li>
               <li><p>Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></span></p></li>
-              <li>
-                <div class = "btn-group pull-right" role="group">
-                  <button class="btn btn-default btn-sm" id="toggleOne"><span class="glyphicon glyphicon-list"></span></button>
-                  <button class="btn btn-default btn-sm" id ="toggleTwo"><span class="glyphicon glyphicon-th-large"></span></button>
-                  <button class="btn btn-default btn-sm" id ="toggleThree"><span class="glyphicon glyphicon-th"></span></button>
-                </div>
-              </li>
             </ul>
           </div>
         </div>
@@ -101,26 +94,6 @@
   </div>
 </div>
 <script type="text/javascript">
-  $("#toggleThree").click(function(){
-  	$(".item").removeClass('col-sm-6 col-sm-offset-3')
-  	$(".item").addClass('col-sm-4')
-    $(".item").css("margin-bottom","0")
-    $container.masonry('layout')
-  })
-  $("#toggleOne").click(function(){
-  	$(".item").removeClass('col-sm-4')
-  	$(".item").addClass('col-sm-6 col-sm-offset-3')
-    $(".item").css("margin-bottom","20px")
-    $container.masonry('layout')
-  })
-  $("#toggleTwo").click(function(){
-    $(".item").removeClass('col-sm-4 col-sm-offset-3')
-    $(".item").addClass('col-sm-6')
-    $(".item").css("margin-bottom","20px")
-    $container.masonry('layout')
-    console.log($container)
-  })
-
   var $container = $(".masonry")
   $(window).on('load', function(){
     $container.imagesLoaded(function(){
