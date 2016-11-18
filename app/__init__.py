@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
 
 cli = Embedly(EMBEDLY_KEY)
 
-redis_cache = redis.from_url(HEROKU_CACHE_URL)
+redis_cache = redis.from_url(REDIS_CACHE_URL)
 
 celery = Celery('app', broker = CELERY_BROKER)
 
