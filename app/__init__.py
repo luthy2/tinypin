@@ -4,8 +4,6 @@ import logging
 from flask import Flask
 from config import SECRET_KEY,GOOGLE_ID, GOOGLE_SECRET, EMBEDLY_KEY, CELERY_BROKER, REDIS_CACHE_URL
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate, MigrateCommand
-from flask_script import Manager
 from flask_login import LoginManager
 from flask_oauthlib.client import OAuth
 from embedly import Embedly
@@ -19,13 +17,10 @@ app.config.from_object('config')
 app.secret_key = SECRET_KEY
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
 
 cli = Embedly(EMBEDLY_KEY)
 
-redis_cache = redis.from_url(HEROKU_REDIS_AMBER_URL)
+redis_cache = redis.from_url(HEROKU_CACHE_URL)
 
 celery = Celery('app', broker = CELERY_BROKER)
 
