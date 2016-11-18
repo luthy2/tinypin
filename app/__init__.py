@@ -2,7 +2,7 @@ import sys
 import logging
 
 from flask import Flask
-from config import SECRET_KEY,GOOGLE_ID, GOOGLE_SECRET, EMBEDLY_KEY
+from config import SECRET_KEY,GOOGLE_ID, GOOGLE_SECRET, EMBEDLY_KEY, CELERY_BROKER, REDIS_CACHE_URL
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
@@ -25,7 +25,7 @@ manager.add_command('db', MigrateCommand)
 
 cli = Embedly(EMBEDLY_KEY)
 
-redis = redis.Redis()
+redis_cache = redis.from_url(HEROKU_REDIS_AMBER_URL)
 
 celery = Celery('app', broker = CELERY_BROKER)
 

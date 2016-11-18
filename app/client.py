@@ -1,9 +1,8 @@
 import requests
 import lassie
 from flask import render_template, render_template_string
-import redis
 import tasks
-from app import cli
+from app import cli, celery, redis_cache
 
 
 def cache_request(urls):
@@ -11,8 +10,8 @@ def cache_request(urls):
 
 
 def get_content(url):
-    if redis.get(url):
-        resp = redis.get(url)
+    if redis_cache.get(url):
+        resp = redis_cache.get(url)
     else:
         resp = cli.oembed(url, words = 30) #cache this
     print resp

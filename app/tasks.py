@@ -1,4 +1,4 @@
-from app import redis
+from app import redis_cache
 from app import cli
 
 
@@ -7,10 +7,10 @@ from app import cli
 def cache_urls(urls):
   not_cached_urls = []
   for u in urls:
-    rv = redis.get(u)
+    rv = redis_cache.get(u)
     if not rv:
       not_cached_urls.append('u')
   resp = cli.oembed(not_cached_urls, words=30)
   for i in resp:
-      redis.set(i["original_url"], i)
+      redis_cache.set(i["original_url"], i)
   return True
