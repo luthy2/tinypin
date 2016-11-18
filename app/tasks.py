@@ -1,5 +1,5 @@
-from app import redis_cache
-from app import cli
+from app import app, cli, redis_cache
+
 
 
 
