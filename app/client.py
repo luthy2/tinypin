@@ -6,6 +6,7 @@ from app import cli, redis_cache
 
 
 def cache_request(urls):
+    print "urls sent to queue"
     return tasks.cache_urls.delay(urls)
 
 
