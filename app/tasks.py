@@ -10,8 +10,8 @@ def cache_urls(urls):
     rv = redis_cache.get(u)
     if not rv:
       not_cached_urls.append('u')
-  resp = cli.oembed(not_cached_urls, words=30)
+  resp = cli.oembed(not_cached_urls, raw = True, words=30)
   for i in resp:
-      c = redis_cache.set(i["original_url"], i)
+      c = redis_cache.set(i["original_url"], i["raw"])
       print 'Item cached in Redis', c
   return True
