@@ -16,7 +16,7 @@ def get_content(url):
         print type(resp), "item loaded from cache"
     else:
         resp = cli.oembed(url, words = 30)
-        redis_cache.set(url, resp.json())
+        redis_cache.set(url, jsonify(resp))
     print resp
     if resp.get("provider_name") == "Twitter":
         return render_twitter(url)
