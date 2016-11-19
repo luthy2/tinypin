@@ -2,12 +2,14 @@ import os
 
 from flask import request, g, render_template, session, url_for, redirect, flash, jsonify, abort
 from flask_login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, google
+from app import app, db, lm, google, cli
+from client import cache_request
 from forms import EditUserForm
 from models import User, Collection, CollectionItem
 from datetime import datetime
 import urllib
 import time
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -65,10 +67,10 @@ def api_create_collection():
             collection.collection_layout = 'col-sm-4'
         if g.user == collection.creator:
             collection.collection_items.delete()
-            if data.get('items')
+            if data.get('items'):
                 for item in data.get('items'):
                     collection.append_child(CollectionItem(parent=collection, content=str(item)))
-                cli.cache_request(data.get('items'))    
+                cache_request(data.get('items'))
             db.session.add(collection)
             db.session.commit()
 
