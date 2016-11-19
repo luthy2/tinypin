@@ -16,7 +16,7 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_error(error):
     db.session.rollback()
-    return render_template('500.html'), 500    
+    return render_template('500.html'), 500
 
 @lm.user_loader
 def load_user(user_id):
@@ -65,10 +65,13 @@ def api_create_collection():
             collection.collection_layout = 'col-sm-4'
         if g.user == collection.creator:
             collection.collection_items.delete()
-            for item in data["items"]:
-                collection.append_child(CollectionItem(parent=collection, content=str(item)))
+            if data.get('items')
+                for item in data.get('items'):
+                    collection.append_child(CollectionItem(parent=collection, content=str(item)))
+                cli.cache_request(data.get('items'))    
             db.session.add(collection)
             db.session.commit()
+
     else:
         collection = Collection()
         user = g.user

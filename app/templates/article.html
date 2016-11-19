@@ -1,3 +1,8 @@
+{%if image%}
 <img src = "{{image}}">
+{% endif %}
 <h4><a href = "{{_url}}">{{title}}</a></h4>
+{% if provider %}
+<h4><small>{{provider}}</small></h4>
+{% endif%}
 <p>{{description}}</p>

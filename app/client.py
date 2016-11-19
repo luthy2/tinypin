@@ -13,8 +13,10 @@ def cache_request(urls):
 def get_content(url):
     if redis_cache.get(url):
         resp = redis_cache.get(url)
+        print "item loaded from cache"
     else:
-        resp = cli.oembed(url, words = 30) #cache this
+        resp = cli.oembed(url, words = 30)
+        redis_cache.set(url, resp)
     print resp
     if resp.get("provider_name") == "Twitter":
         return render_twitter(url)
