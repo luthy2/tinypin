@@ -13,7 +13,7 @@ def cache_request(urls):
 def get_content(url):
     if redis_cache.get(url):
         resp = redis_cache.get(url)
-        print "item loaded from cache"
+        print type(resp), "item loaded from cache"
     else:
         resp = cli.oembed(url, words = 30)
         redis_cache.set(url, resp)
