@@ -1,3 +1,4 @@
+from flask import jsonify
 import requests
 import lassie
 from flask import render_template, render_template_string
