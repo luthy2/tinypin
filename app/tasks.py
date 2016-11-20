@@ -7,11 +7,11 @@ from flask import jsonify
 def cache_urls(urls):
   not_cached_urls = []
   for u in urls:
-    rv = redis_cache.get(u)
-    if not rv:
-      not_cached_urls.append('u')
+    r = redis_cache.get(u)
+    if not r:
+      not_cached_urls.append(u)
   resp = cli.oembed(not_cached_urls, raw = True, words=30)
   for i in resp:
       c = redis_cache.set(i["original_url"], jsonify(i['raw']))
-      print 'Item cached in Redis', c
+      print 'Item cached', c
   return True
