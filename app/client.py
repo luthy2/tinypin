@@ -19,7 +19,7 @@ def get_content(url):
     else:
         resp = cli.oembed(url, raw=True, words = 30)
         if resp.get('raw'):
-            r = redis_cache.set(url, resp['raw']))
+            r = redis_cache.set(url, resp['raw'])
             print 'item cached:', r
     print resp
     if resp.get("provider_name") == "Twitter":
