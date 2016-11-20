@@ -13,7 +13,7 @@ def cache_request(urls):
 
 def get_content(url):
     if redis_cache.get(url):
-        r = redis_cache.get(url)
+        resp = redis_cache.get(url)
         resp = json.loads(resp.decode('utf-8'))
         print type(resp), "item loaded from cache"
     else:
