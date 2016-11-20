@@ -1,4 +1,3 @@
-from flask import jsonify
 import json
 import requests
 import lassie
@@ -14,13 +13,13 @@ def cache_request(urls):
 
 def get_content(url):
     if redis_cache.get(url):
-        resp = redis_cache.get(url)
-        resp = resp.json()
+        r = redis_cache.get(url)
+        resp = json.loads(resp.decode('utf-8'))
         print type(resp), "item loaded from cache"
     else:
         resp = cli.oembed(url, raw=True, words = 30)
         if resp.get('raw'):
-            r = redis_cache.set(url, jsonify(resp['raw']))
+            r = redis_cache.set(url, resp['raw']))
             print 'item cached:', r
     print resp
     if resp.get("provider_name") == "Twitter":
