@@ -95,7 +95,12 @@ div, p{
   background-color:#fff;
 }
 
-
+.article-title {
+  color:#2f2f2f;
+}
+.article-title:hover{
+  color:#2f2f2f;
+}
 .pad-top{
     padding-top:5%;
   }
@@ -106,8 +111,7 @@ div, p{
   padding-bottom: 20%;
 }
 .item{
-  margin-top:1em;
-  margin-bottom:1em;
+  margin-bottom:3em;
 }
 
 img{
