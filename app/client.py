@@ -41,7 +41,7 @@ def get_content(url):
             ratio = 100
         return render_template("video.html", content = resp.get("html"), ratio = ratio)
     elif resp["type"] == "link":
-        return render_template("article.html", title = resp.get("title"), image=resp.get("thumbnail_url"), description = resp.get("description"), _url=resp.get("url"))
+        return render_template("article.html", title = resp.get("title"), image=resp.get("thumbnail_url"), description = resp.get("description"), _url=resp.get("url"), provider = resp.get("provider_name"))
     elif resp["type"]  == "photo":
         print "photo"
         return render_template("photo.html", _url = str(resp["url"]), source = resp.original_url)
