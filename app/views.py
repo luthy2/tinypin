@@ -85,7 +85,7 @@ def api_create_collection():
         if layout == 'one':
             collection.collection_layout = 'col-sm-6 col-sm-offset-3'
         elif layout == 'two':
-            collection.layout == 'col-sm-6'
+            collection.collection_layout == 'col-sm-6'
         elif layout == 'three':
             collection.collection_layout = 'col-sm-4'
         for item in data["items"]:
