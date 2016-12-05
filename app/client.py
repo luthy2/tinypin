@@ -15,7 +15,7 @@ def get_content(url):
     if redis_cache.get(url):
         resp = redis_cache.get(url)
         resp = json.loads(resp.decode('utf-8'))
-        print type(resp), "item loaded from cache"
+        print resp, "item loaded from cache"
     else:
         resp = cli.oembed(url, raw=True, words = 30)
         if resp.get('raw'):
