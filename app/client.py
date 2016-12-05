@@ -22,7 +22,7 @@ def get_content(url):
             r = redis_cache.set(url, resp['raw'])
             print 'item cached:', r
     print resp
-    if not resp.get('error'):
+    if not resp.get('type')=="error":
         if resp.get("provider_name") == "Twitter":
             return render_twitter(url)
         elif resp.get("provider_name") == "YouTube":
