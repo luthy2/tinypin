@@ -65,7 +65,9 @@ def render_youtube(html):
     return render_template("video.html", youtube = True, content = html)
 
 def render_nostyle(url):
+    print 'url is', url
     resp = lassie.fetch(url)
+    print 'lassie response is', resp
     thumbnail = resp.get('images')
     if thumbnail:
         thumbnail = thumbnail[0].get('src')
