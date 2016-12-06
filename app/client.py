@@ -71,12 +71,12 @@ def render_nostyle(url):
     resp = redis_cache.get(url)
     if not resp:
         resp = lassie.fetch(url)
-        thumbnail = resp.get('images')
+        r = redis_cache.set(url, json.loads(resp))
+    thumbnail = resp.get('images')
     if thumbnail:
         thumbnail = thumbnail[0].get('src')
     title = resp.get('title')
     description = resp.get('description')
     parse_obj = urlparse(url)
     provider = parse_obj.netloc
-    r = redis_cache.set(url, jsonify(resp))
     return render_template('article.html', _url = url, image = thumbnail, title = title, description = description, provider=provider)
