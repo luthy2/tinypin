@@ -71,7 +71,8 @@ def render_nostyle(url):
     resp = redis_cache.get(url)
     if not resp:
         resp = lassie.fetch(url)
-        r = redis_cache.set(url, json.loads(resp))
+        r = redis_cache.set(url, json.dumps(resp))
+    resp = json.loads(resp)
     thumbnail = resp.get('images')
     if thumbnail:
         thumbnail = thumbnail[0].get('src')
