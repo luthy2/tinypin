@@ -7,8 +7,10 @@
 {%else%}
 <a href = "{{_url}}" class="article-title">Untitled</a>
 {%endif%}
-{% if provider_name %}
+{% if provider %}
 <br><small>{{provider}}</small>
+{%else%}
+<br><small>{{_url}}</small>
 {% endif%}
 </h3>
 {% if description%}

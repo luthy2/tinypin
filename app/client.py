@@ -4,7 +4,7 @@ import lassie
 from flask import render_template, render_template_string
 import tasks
 from app import cli, redis_cache
-
+import urlparse import urlparse
 
 def cache_request(urls):
     print "urls sent to queue"
@@ -76,5 +76,7 @@ def render_nostyle(url):
         thumbnail = thumbnail[0].get('src')
     title = resp.get('title')
     description = resp.get('description')
+    parse_obj = urlparse(url)
+    provider = parse_obj.netloc
     r = redis_cache.set(url, jsonify(resp))
-    return render_template('article.html', _url = url, image = thumbnail, title = title, description = description)
+    return render_template('article.html', _url = url, image = thumbnail, title = title, description = description, provider=provider)
