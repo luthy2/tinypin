@@ -23,7 +23,8 @@ def get_content(url):
             print 'item cached:', r
         else:
             resp = lassie.fetch(url)
-            r = redis_cache.set(url, jsonify(resp))
+            resp = json.dumps(resp)
+            r = redis_cache.set(url, resp)
     print resp
     if resp:
         if resp.get("provider_name") == "Twitter":
