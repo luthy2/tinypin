@@ -1,7 +1,7 @@
 import json
 import requests
 import lassie
-from flask import render_template, render_template_string
+from flask import render_template, render_template_string, jsonify
 import tasks
 from app import cli, redis_cache
 from urlparse import urlparse
