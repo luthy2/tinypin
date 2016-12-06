@@ -4,7 +4,7 @@ import lassie
 from flask import render_template, render_template_string
 import tasks
 from app import cli, redis_cache
-import urlparse import urlparse
+from urlparse import urlparse
 
 def cache_request(urls):
     print "urls sent to queue"
