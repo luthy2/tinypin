@@ -2,9 +2,17 @@
 <img src = "{{image}}">
 {% endif %}
 <h3>
+{%if title%}
 <a href = "{{_url}}" class="article-title">{{title}}</a>
-{% if provider %}
+{%else%}
+<a href = "{{_url}}">Untitled</a>
+{%endif%}
+{% if provider_name %}
 <br><small>{{provider}}</small>
 {% endif%}
 </h3>
+{% if description%}
 <p>{{description}}</p>
+{%else%}
+<p>We were unable to extract the content from this link. View it at the original source.</p>
+{% endif%}
