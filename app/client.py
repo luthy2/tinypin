@@ -21,6 +21,9 @@ def get_content(url):
         if resp.get('raw'):
             r = redis_cache.set(url, resp.get('raw'))
             print 'item cached:', r
+        else:
+            resp = lassie.fetch(url)
+            r = redis_cache.set(url, jsonify(resp))
     print resp
     if resp:
         if resp.get("provider_name") == "Twitter":
@@ -65,12 +68,11 @@ def render_youtube(html):
     return render_template("video.html", youtube = True, content = html)
 
 def render_nostyle(url):
-    print 'url is', url
     resp = lassie.fetch(url)
-    print 'lassie response is', resp
     thumbnail = resp.get('images')
     if thumbnail:
         thumbnail = thumbnail[0].get('src')
     title = resp.get('title')
     description = resp.get('description')
-    return render_template('article.html', image = thumbnail, title = title, description = description)
+    r = redis_cache.set(url, jsonify(resp))
+    return render_template('article.html', _url = url, image = thumbnail, title = title, description = description)
