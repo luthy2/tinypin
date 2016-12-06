@@ -69,6 +69,7 @@ def render_youtube(html):
 
 def render_nostyle(url):
     resp = redis_cache.get(url)
+    print resp, type(resp)
     if not resp:
         resp = lassie.fetch(url)
         r = redis_cache.set(url, json.dumps(resp))
