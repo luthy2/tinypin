@@ -73,7 +73,7 @@ iframe{
   {% endraw %}
   <script>
     angular.module('collectionApp', [])
-      .controller('CollectionController', ['$scope' ,'$http', '$q', '$window', '$sce' function ($scope, $http,$q,$window,$sce) {
+      .controller('CollectionController', ['$scope' ,'$http', '$q', '$window', '$sce', function ($scope, $http,$q,$window,$sce) {
         $scope.items = [];
         $scope.url = ''
         $scope.title = ''
@@ -98,7 +98,7 @@ iframe{
         }), function error(response){
           console.log("we had an error with your request.")
           console.log(response)
-        }
+        };
 
         $scope.setTitle = function(title, form){
           if (form){
