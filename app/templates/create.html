@@ -138,7 +138,7 @@ iframe{
         }
 
         $scope.submit = function(){
-          collection = {'title':$scope.title, 'is_public':$scope.public, 'items' : $scope.items, 'unique_id': board_id, 'layout':$scope.layout}
+          collection = {'title':$scope.title, 'is_public':$scope.public, 'items' : $scope.items.map(function(a){return a.url}), 'unique_id': board_id, 'layout':$scope.layout}
           $http ({
             method:'POST',
             url: api_base + 'boards/create',
