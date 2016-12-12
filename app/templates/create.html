@@ -116,7 +116,7 @@ iframe{
             $http({
               method:"POST",
               url:api_base+"embed",
-              data:url,
+              data:{"url":url},
             }).then(function success(response){
               console.log(response)
               $scope.items.push({url:url, html:response.data.html});
