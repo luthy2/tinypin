@@ -44,7 +44,7 @@ iframe{
         <div class="row masonry">
             <div id = "items">
               <div ng-repeat="item in items track by $index" class="col-sm-4 item item-width">
-                <a class= "link-embed hidden" href = {{item}}>{{item}} </a><span id="removeButton" ng-click="remove(item)"> [remove]</span>
+                <div><span ng-bind-html="$sce.trustAsHtml(item.html)"></span><span id="removeButton" ng-click="remove(item)"> [remove]</span></div>
               </div>
             </div>
           </div>
@@ -73,13 +73,14 @@ iframe{
   {% endraw %}
   <script>
     angular.module('collectionApp', [])
-      .controller('CollectionController', ['$scope' ,'$http', '$q', '$window', function ($scope, $http,$q,$window) {
+      .controller('CollectionController', ['$scope' ,'$http', '$q', '$window', '$sce' function ($scope, $http,$q,$window,$sce) {
         $scope.items = [];
         $scope.url = ''
         $scope.title = ''
         $scope.public = true
         $scope.background_color = ''
         $scope.layout = ''
+        $scope.$sce = $sce
 
         var api_base='http://tinypin.herokuapp.com/api/1/'
 
@@ -112,7 +113,18 @@ iframe{
 
         $scope.add = function(url, form) {
           if (form){
-            $scope.items.push(url);
+            $http({
+              method:"POST",
+              url:api_base+"embed",
+              data:url,
+            }).then(function success(response){
+              console.log(response)
+              $scope.items.push({url:url, html:response.data.html});
+            }), function error(response){
+              $scope.items.push({url:url, html:"<div><a href='"+url+">"+url+"</a></div>"})
+              console.log(response)
+            }
+
             $scope.urlForm.$setPristine();
             $scope.urlForm.$setUntouched();
             $scope.url = ''
@@ -158,7 +170,7 @@ iframe{
     // create an observer instance
     var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
-      $('.link-embed').embedly({key: '7cc09b03ae3b48c5b8025541369b22c3'}, words = 15);
+      // $('.link-embed').embedly({key: '7cc09b03ae3b48c5b8025541369b22c3'}, words = 15);
       $container.masonry('reloadItems')
       $container.masonry('layout')
     });

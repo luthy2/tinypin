@@ -3,9 +3,9 @@
 {% endif %}
 <h3>
 {%if title%}
-<a href = "{{_url}}" class="article-title">{{title}}</a>
+<a href = "{{_url}}" class="article-title" target="_blank" rel="noopener noreferrer">{{title}}</a>
 {%else%}
-<a href = "{{_url}}" class="article-title">Untitled</a>
+<a href = "{{_url}}" class="article-title" target="_blank" rel="noopener noreferrer">Untitled</a>
 {%endif%}
 {% if provider %}
 <br><small>{{provider}}</small>

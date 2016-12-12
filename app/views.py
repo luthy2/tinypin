@@ -3,7 +3,7 @@ import os
 from flask import request, g, render_template, session, url_for, redirect, flash, jsonify, abort
 from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, google, cli
-from client import cache_request
+from client import cache_request, get_content
 from forms import EditUserForm
 from models import User, Collection, CollectionItem
 from datetime import datetime
@@ -30,6 +30,8 @@ def before_request():
     print g.user
     if "user_id" in session:
         g.user = User.query.get(session["user_id"])
+
+    #TODO i think this needs to be removed
     elif 'google_token' in session:
         user_data = google.get("userinfo")
         username = user_data.data.get("email")
@@ -108,6 +110,7 @@ def api_get_items():
     print data
     unique_id = data.get("unique_id")
     collection = Collection.query.filter_by(unique_id = unique_id).first()
+    # if offset:
     urls = []
     title = None
     if collection:
@@ -115,6 +118,13 @@ def api_get_items():
             urls.append(str(item.content))
             title = collection.title
     return jsonify(ok=True, items = urls, title = title )
+
+@app.route('/api/1/embed', methods = ["POST"])
+def api_embed_service():
+    data = request.get_json()
+    url = data.get("url")
+    html = get_content(url)
+    return jsonify(ok=True, html=html)
 
 
 @app.route("/<username>/boards/<unique_id>/delete")
