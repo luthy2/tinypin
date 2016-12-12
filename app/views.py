@@ -115,8 +115,9 @@ def api_get_items():
     title = None
     if collection:
         for item in collection.collection_items:
-            urls.append(str(item.content))
-            title = collection.title
+            i = {"url":str(url), "html":get_content(url)}
+            urls.append(i)
+        title = collection.title
     return jsonify(ok=True, items = urls, title = title )
 
 @app.route('/api/1/embed', methods = ["POST"])
