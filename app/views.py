@@ -115,7 +115,7 @@ def api_get_items():
     title = None
     if collection:
         for item in collection.collection_items:
-            i = {"url":str(url), "html":get_content(url)}
+            i = {"url":str(item.content), "html":get_content(item.content)}
             urls.append(i)
         title = collection.title
     return jsonify(ok=True, items = urls, title = title )
