@@ -104,21 +104,24 @@ def api_create_collection():
 #     html =  render_template('collection_items.html', items = items)
 
 
-@app.route('/api/1/boards/items', methods = ["POST"])
+@app.route('/api/1/boards/items', methods = ["POST", "GET"])
 def api_get_items():
     data = request.get_json()
-    print data
+    # offset = data.get("offset") or request.args.get("offset") or 0
+    # limit = data.get("limit") or request.args.get("limit") or None
     unique_id = data.get("unique_id")
     collection = Collection.query.filter_by(unique_id = unique_id).first()
-    # if offset:
-    urls = []
+    items = []
     title = None
     if collection:
-        for item in collection.collection_items:
+        coll_items = collection.collection_items.all()
+        # coll_items = coll_items.from_self().offset(offset).limit(limit)
+        for item in coll_items:
+            #possibly change this to a named tuple
             i = {"url":str(item.content), "html":get_content(item.content)}
-            urls.append(i)
+            items.append(i)
         title = collection.title
-    return jsonify(ok=True, items = urls, title = title )
+    return jsonify(ok=True, items = items, title = title )
 
 @app.route('/api/1/embed', methods = ["POST"])
 def api_embed_service():
@@ -158,6 +161,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('google_token', None)
+    session.pop('user_id', None)
     g.user = None
     return redirect(url_for('index'))
 

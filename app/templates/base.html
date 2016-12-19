@@ -44,7 +44,7 @@
     <div class="collapse navbar-collapse" id ="tinypinNavbar">
       <div class="pull-right">
         {%if g.user%}<a href="{{url_for('user', username = g.user.username)}}" class="navbar-link" style="margin-right:20px;">{{g.user.username}}</a>{%endif%}
-        {%if g.user%}<a type="button" class="btn btn-default navbar-btn" href = "/create">New Board</a>{%else%}<button type="button" class="btn btn-default navbar-btn pull-right" data-toggle="modal" data-target="#myModal">Login/Signup</button>{%endif%}
+        <a type="button" class="btn btn-default navbar-btn" href = "/create">New Board</a>{%if not g.user%}<button type="button" class="btn btn-default navbar-btn pull-right" data-toggle="modal" data-target="#myModal">Login/Signup</button>{%endif%}
       </div>
     </div>
   </div>
