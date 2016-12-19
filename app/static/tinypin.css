@@ -87,12 +87,29 @@ div, p{
   background-color: white;
 }
 
+.btn.btn-nav:hover{
+  background-color: #f76b13;
+}
+
 .navbar-default .navbar-brand{
     color: #F76B13;
   }
 
 .navbar-default{
   background-color:#fff;
+}
+
+.btn-login{
+  border:none;
+  color:gray;
+  background-color: white;
+}
+
+.btn-login:hover{
+  border:none;
+  color:gray;
+  background-color: white;
+  text-decoration: none;
 }
 
 .article-title {
