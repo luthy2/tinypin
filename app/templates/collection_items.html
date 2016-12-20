@@ -1,5 +1,5 @@
 {% for item in items%}
-  <div class="{{collection.collection_layout}} item">
+  <div class="{{collection.collection_layout}} col-xs-12 item">
     {{item.render() | safe}}
   </div>
 {% else %}
