@@ -19,6 +19,7 @@
   <!--fonts-->
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
   <!--embedly js-->
   <script src="https://cdn.embed.ly/jquery.embedly-3.1.1.min.js"></script>
   <!--embedly js-->
@@ -44,7 +45,7 @@
     <div class="collapse navbar-collapse" id ="tinypinNavbar">
       <div class="pull-right">
         {%if g.user%}<a href="{{url_for('user', username = g.user.username)}}" class="navbar-link" style="margin-right:20px;">{{g.user.username}}</a>{%endif%}
-        {%if not g.user%}<a type="button" class="navbar-link" data-toggle="modal" data-target="#myModal">Login/Signup</a>{%endif%}<a type="button" class="btn btn-default navbar-btn btn-nav" href = "/create">New Board</a>
+        {%if not g.user%}<a type="button" class="navbar-link" style="margin-right:20px;" data-toggle="modal" data-target="#myModal">Login/Signup</a>{%endif%}<a type="button" class="btn btn-default navbar-btn btn-nav" href = "/create">New Board</a>
       </div>
     </div>
   </div>
