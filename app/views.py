@@ -199,11 +199,11 @@ def get_google_oauth_token():
 
 @app.route("/")
 def index():
-    return render_template("index.html", title = "Home", user=user)
+    return render_template("index.html", title = "Home", title="Home", desc="A simple collection creator. Create and share collections of links.")
 
 @app.route("/create")
 def create():
-    return render_template('create.html')
+    return render_template('create.html', title="Create", desc="Add links and customize your collection.")
 
 @app.route("/edit/<unique_id>")
 def edit(unique_id):
@@ -223,7 +223,7 @@ def edit(unique_id):
 def user(username):
   user = User.query.filter(User.username.ilike(username)).first()
   if user:
-      return render_template("user.html", user = user)
+      return render_template("user.html", user = user, title="%s" % str(user.username), desc="%s's collections" % str(user.username))
   else:
       abort(404)
 
@@ -245,10 +245,11 @@ def edit_user(username):
 
 @app.route("/<username>/boards/<unique_id>")
 def user_board(username, unique_id):
+    user = User.query.filter(User.username.ilike(username))
     unique_id = unique_id.lower()
-    collection = Collection.query.filter(Collection.unique_id == unique_id).first()
-    if collection and collection.is_public:
-        return render_template("collection.html", collection = collection)
+    collection = User.query.filter(User.collections.unique_id == unique_id).first()
+    if collection and collection.is_public or user == g.user:
+        return render_template("collection.html", collection = collection, title = collection.title, desc = 'A collection created by %s tinypin' % str(user.username) )
     else:
         abort(404)
 
@@ -256,9 +257,9 @@ def user_board(username, unique_id):
 def board(unique_id):
     unique_id = unique_id.lower()
     collection = Collection.query.filter(Collection.unique_id == unique_id).first()
-    if collection and collection.author:
+    if collection and collection.author and collection.is_public:
         return redirect(url_for("user_board",username = collection.creator.username, unique_id = unique_id))
     elif collection:
-        return render_template("collection.html", collection = collection)
+        return render_template("collection.html", collection = collection, title=collection.title, desc="A collection on tinypin")
     else:
         return abort(404)
