@@ -118,6 +118,7 @@ div, p{
   font-size:40px;
   border:none;
   background-color: transparent;
+  box-shadow: none;
 }
 .collection-title-form:focus{
   border:none;
