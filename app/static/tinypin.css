@@ -117,6 +117,7 @@ div, p{
   height:50px;
   font-size:40px;
   border:none;
+  background-color: transparent;
 }
 .collection-title-form:focus{
   border:none;
