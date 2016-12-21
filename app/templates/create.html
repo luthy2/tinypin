@@ -20,15 +20,13 @@ iframe{
   {% raw %}
   <div ng-controller="CollectionController">
     <div class="row">
-      <div class="col-xs-12 col-md-6">
-        <h4>Create a Collection
+      <div class="col-xs-12 col-md-8 col-md-offset-2">
           <small>
             <span class="text-danger" ng-show="urlForm.url.$error.url">hmm this doesnt seem like a url</span>
             <span class="text-warning" ng-show="urlForm.url.$error.required">you have to add a url!</span>
           </small>
-        </h4>
         <form class="titleForm">
-          <input class="form-control" placeholder="give your collection a title" type="text" ng-model= "title" name="title" ng-model-options="{ updateOn: 'blur' }" required>
+          <input class="form-control collection-title-form" placeholder="give your collection a title" type="text" ng-model= "title" name="title" ng-model-options="{ updateOn: 'blur' }" required>
         </form>
         <form novalidate class="url-form" name="urlForm" style="padding-top:1%;">
           <div class="form-group">
@@ -170,7 +168,6 @@ iframe{
     // create an observer instance
     var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
-      // $('.link-embed').embedly({key: '7cc09b03ae3b48c5b8025541369b22c3'}, words = 15);
       $container.masonry('reloadItems')
       $container.masonry('layout')
     });
