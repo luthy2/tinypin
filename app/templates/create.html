@@ -21,10 +21,6 @@ iframe{
   <div ng-controller="CollectionController">
     <div class="row">
       <div class="col-xs-12 col-md-6 col-md-offset-3">
-          <small>
-            <span class="text-danger" ng-show="urlForm.url.$error.url">hmm this doesnt seem like a url</span>
-            <span class="text-warning" ng-show="urlForm.url.$error.required">you have to add a url!</span>
-          </small>
         <form class="titleForm">
           <input class="form-control collection-title-form" placeholder="give your collection a title" type="text" ng-model= "title" name="title" ng-model-options="{ updateOn: 'blur' }" required>
         </form>
@@ -32,6 +28,10 @@ iframe{
           <div class="form-group">
             <input id="urlInput" class="form-control" placeholder="http://www.example.com" type="url" ng-model="url" name="url" ng-model-options="{ updateOn: 'blur' }" required>
             <span class="pull-right" style="padding-top:1%;"><input id = "add" class="btn btn-default" type="submit" ng-click="add(url, urlForm.url.$valid)" value="+"></span>
+            <small>
+              <span class="text-danger" ng-show="urlForm.url.$error.url">hmm this doesnt seem like a url</span>
+              <span class="text-warning" ng-show="urlForm.url.$error.required">you have to add a url!</span>
+            </small>
           </div>
         </form>
       </div>

@@ -238,6 +238,8 @@ img{
 
 .url-form:focus{
   outline:none;
+  box-shadow:none;
+  border:none;
 }
 
 .link{
