@@ -271,7 +271,7 @@ img{
 
 .board-card-link:hover{
   text-decoration: none;
-  
+  color:#2A5D8C;
 }
 #submitFooter{
   position: fixed;
