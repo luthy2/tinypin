@@ -135,6 +135,10 @@ div, p{
 .pad-top{
     padding-top:5%;
   }
+
+.pad-bottom-half{
+  padding-bottom:5%
+}
 .pad-bottom{
   padding-bottom: 10%;
 }
