@@ -42,12 +42,12 @@
       {% if collection.is_public %}
       <div class="col-md-3" >
         <div class="panel panel-default board-card" style="height:200px;">
-          <div class="panel-body">
-            <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}">
+          <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" link-no-style>
+            <div class="panel-body">
               <h5>{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h5>
-            </a>
-            <p>{{collection.collection_items.all()|count}} items</p>
-          </div>
+              <p>{{collection.collection_items.all()|count}} items</p>
+            </div>
+          </a>
         </div>
       </div>
       {%endif%}
