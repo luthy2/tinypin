@@ -199,7 +199,7 @@ def get_google_oauth_token():
 
 @app.route("/")
 def index():
-    return render_template("index.html", title = "Home", title="Home", desc="A simple collection creator. Create and share collections of links.")
+    return render_template("index.html", title = "Home", desc="A simple collection creator. Create and share collections of links.")
 
 @app.route("/create")
 def create():
