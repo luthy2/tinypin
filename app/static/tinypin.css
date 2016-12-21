@@ -269,8 +269,9 @@ img{
   color:gray;
 }
 
-.board-card-link{
+.board-card-link:hover{
   text-decoration: none;
+  
 }
 #submitFooter{
   position: fixed;
