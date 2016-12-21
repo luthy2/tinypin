@@ -44,7 +44,7 @@
         <div class="panel panel-default board-card" style="height:200px;">
           <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" class="board-card-link">
             <div class="panel-body">
-              <h5>{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h5>
+              <h4>{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h4>
               <p>{{collection.collection_items.all()|count}} items</p>
             </div>
           </a>

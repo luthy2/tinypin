@@ -266,6 +266,10 @@ img{
 .board-card-link{
   display:block;
   height:100%;
+  color:gray;
+}
+
+.board-card-link{
   text-decoration: none;
 }
 #submitFooter{
