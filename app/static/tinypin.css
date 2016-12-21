@@ -115,7 +115,7 @@ div, p{
 
 .collection-title-form{
   height:50px;
-  font-size:40px;
+  font-size:30px;
   border:none;
   background-color: transparent;
   box-shadow: none;
@@ -234,6 +234,10 @@ img{
 }
 .url-form input.ng-valid.ng-touched {
   border:2px solid #008C1C;
+}
+
+.url-form:focus{
+  outline:none;
 }
 
 .link{
