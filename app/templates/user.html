@@ -11,11 +11,11 @@
     {% for collection in user.collections%}
       <div class="col-md-3 col-sm-4">
         <div class="panel panel-default board-card">
-          <div class="panel-body" style="margin-bottom:75px;">
-            <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" style="display:block;">
-              <h5 style="margin-bottom:auto">{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h5>
-            </a>
+          <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" class="link-no-style">
+            <div class="panel-body" style="margin-bottom:75px;">
+            <h5 style="margin-bottom:auto">{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h5>
             <p><small>{{collection.collection_items.all()|count}} items {% if collection.is_public%}public 🔓{%else%} private 🔐{%endif%}</small></p>
+          </a>
           </div>
           <div class="panel-footer text-align text-right" style="border-top:none; background-color:white;">
             <div class="btn-group dropup">
