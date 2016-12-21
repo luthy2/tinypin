@@ -121,6 +121,7 @@ def api_get_items():
             i = {"url":str(item.content), "html":get_content(item.content)}
             items.append(i)
         title = collection.title
+        # TODO layout = collection.laout
     return jsonify(ok=True, items = items, title = title )
 
 @app.route('/api/1/embed', methods = ["POST"])
@@ -245,9 +246,9 @@ def edit_user(username):
 
 @app.route("/<username>/boards/<unique_id>")
 def user_board(username, unique_id):
-    user = User.query.filter(User.username.ilike(username))
+    user = User.query.filter(User.username.ilike(username)).first()
     unique_id = unique_id.lower()
-    collection = User.query.filter(User.collections.unique_id == unique_id).first()
+    collection = user.collections.filter(Collection.unique_id == unique_id)
     if collection and collection.is_public or user == g.user:
         return render_template("collection.html", collection = collection, title = collection.title, desc = 'A collection created by %s tinypin' % str(user.username) )
     else:
