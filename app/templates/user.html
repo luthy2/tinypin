@@ -9,7 +9,7 @@
   <div class="row">
   {% if user.username|string()==g.user.username|string()%}
     {% for collection in user.collections%}
-      <div class="col-md-3 col-sm-4">
+      <div class="col-md-3 col-sm-6">
         <div class="panel panel-default board-card">
           <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" class="board-card-link">
             <div class="panel-body" style="margin-bottom:75px;">
@@ -40,7 +40,7 @@
   {%else%}
     {% for collection in user.collections%}
       {% if collection.is_public %}
-      <div class="col-md-3" >
+      <div class="col-md-3 col-sm-6">
         <div class="panel panel-default board-card" style="height:200px;">
           <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" class="board-card-link">
             <div class="panel-body">
