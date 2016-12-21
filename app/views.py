@@ -248,7 +248,7 @@ def edit_user(username):
 def user_board(username, unique_id):
     user = User.query.filter(User.username.ilike(username)).first()
     unique_id = unique_id.lower()
-    collection = user.collections.filter(Collection.unique_id == unique_id.lower()).first()
+    collection = user.collections.from_self.filter(Collection.unique_id == unique_id).first()
     if collection and collection.is_public or user == g.user:
         return render_template("collection.html", collection = collection, title = collection.title, desc = 'A collection created by %s tinypin' % str(user.username) )
     else:
