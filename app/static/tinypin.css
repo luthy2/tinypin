@@ -263,7 +263,11 @@ img{
 .board-card:hover{
   border:2px solid #F76B13;
 }
-
+.board-card-link{
+  display:block;
+  height:100%;
+  text-decoration: none;
+}
 #submitFooter{
   position: fixed;
   bottom: 0;
