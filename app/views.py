@@ -250,7 +250,7 @@ def user_board(username, unique_id):
     unique_id = unique_id.lower()
     collection = user.collections.from_self().filter(Collection.unique_id == unique_id).first()
     if collection and collection.is_public or user == g.user:
-        return render_template("collection.html", collection = collection, title = collection.title, desc = 'A collection created by %s tinypin' % str(user.username) )
+        return render_template("collection.html", collection = collection, title = collection.title, desc = 'A collection created by %s tinypin' % str(user.username), content_url=url_for("user_board", username = username, unique_id = unique_id, _external=True))
     else:
         abort(404)
 
@@ -261,6 +261,6 @@ def board(unique_id):
     if collection and collection.author and collection.is_public:
         return redirect(url_for("user_board",username = collection.creator.username, unique_id = unique_id))
     elif collection:
-        return render_template("collection.html", collection = collection, title=collection.title, desc="A collection on tinypin")
+        return render_template("collection.html", collection = collection, title=collection.title, desc="A collection on tinypin", content_url=url_for("board", unique_id=unique_id))
     else:
         return abort(404)
