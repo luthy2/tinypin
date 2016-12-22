@@ -10,6 +10,22 @@ def cache_request(urls):
     print "urls sent to queue"
     return tasks.cache_urls.delay(urls)
 
+# def get_content_batch(urls):
+#     not_cached_urls = []
+#     for u in urls:
+#         r = redis_cache.get(u)
+#         if not r:
+#             not_cached_urls.append(u)
+#     resp = cli.oembed(not_cached_urls, raw=True, words = 30)
+#     for r in resp:
+#         if r.get('raw'):
+#             url_content = redis_cache.set(r.original_url, resp.get('raw'))
+#             print 'item cached:', url_content
+#         else:
+#             resp = lassie.fetch(r.original_url)
+#             j = json.dumps(resp)
+#             r = redis_cache.set(r.original_url, j)
+#     return redis_cache.mget(urls)
 
 def get_content(url):
     if redis_cache.get(url):
@@ -49,7 +65,7 @@ def get_content(url):
             return render_template("article.html", title = resp.get("title"), image=resp.get("thumbnail_url"), description = resp.get("description"), _url=resp.get("url"), provider = resp.get("provider_name"))
         elif resp.get("type")  == "photo":
             print "photo"
-            return render_template("photo.html", _url = str(resp["url"]), source = resp.original_url)
+            return render_template("photo.html", _url = str(resp["url"]), source = url)
         else:
             return render_nostyle(url)
     else:
