@@ -261,6 +261,27 @@ def board(unique_id):
     if collection and collection.author and collection.is_public:
         return redirect(url_for("user_board",username = collection.creator.username, unique_id = unique_id))
     elif collection:
-        return render_template("collection.html", collection = collection, title=collection.title, desc="A collection on tinypin", content_url=url_for("board", unique_id=unique_id))
+        return render_template("collection.html", collection = collection, title=collection.title, desc="A collection on tinypin", content_url=url_for("board", unique_id=unique_id, _external = True))
     else:
         return abort(404)
+
+
+@app.route("/add-widget")
+def chrome_extension():
+    user = g.user
+    #TODO make sure that we actually get a URL here, otherwise this will break
+    url = request.args.get("url")
+    session['url_from_widget'] = url
+    return render_template("add-widget.html")
+
+@app.route("/add-widget/redirect")
+def chrome_extension_redirect(collection_id, url):
+    collection  = Collection.query.filter(Collection.id == collection_id).first()
+    if collection and url and g.user == collection.author:
+        collection.append_child(CollectionItem(parent=collection, content=str(url)))
+        cache_request(url)
+        db.session.add(collection)
+        db.session.commit()
+        return redirect(url)
+    else:
+        #TODO
