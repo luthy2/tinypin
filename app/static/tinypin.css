@@ -273,6 +273,23 @@ img{
   text-decoration: none;
   color:#2A5D8C;
 }
+
+.widget-card{
+  height:50px;
+  background-color: #fafafa;
+}
+
+.widget-card-link{
+  display:block;
+  height:100;
+  color:gray;
+}
+.widget-card-link:hover{
+  text-decoration: none;
+  color:#2A5D8C;
+  border:2px solid #F76B13;
+}
+
 #submitFooter{
   position: fixed;
   bottom: 0;

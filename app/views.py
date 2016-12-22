@@ -283,5 +283,6 @@ def chrome_extension_redirect(collection_id, url):
         db.session.add(collection)
         db.session.commit()
         return redirect(url)
-    else:
-        #TODO
+    # else:
+    #     #TODO
+    #     pass
