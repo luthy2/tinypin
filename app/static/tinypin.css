@@ -279,6 +279,12 @@ img{
   background-color: #fafafa;
 }
 
+.widget-card:hover{
+  height:50px;
+  background-color: #fafafa;
+  border:2px solid #F76B13;
+}
+
 .widget-card-link{
   display:block;
   height:100%;
@@ -287,7 +293,6 @@ img{
 .widget-card-link:hover{
   text-decoration: none;
   color:#2A5D8C;
-  border:2px solid #F76B13;
 }
 
 #submitFooter{
