@@ -275,7 +275,9 @@ def chrome_extension():
     return render_template("add-widget.html", user = user, url= url)
 
 @app.route("/add-widget/redirect")
-def chrome_extension_redirect(collection_id, url):
+def chrome_extension_redirect():
+    collection_id = request.args.get("id")
+    url = request.args.get("url")
     collection  = Collection.query.filter(Collection.id == collection_id).first()
     if collection and url and g.user == collection.author:
         collection.append_child(CollectionItem(parent=collection, content=str(url)))
