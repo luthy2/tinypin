@@ -14,10 +14,10 @@
         <div class="panel panel-default board-card">
           <a href = "{{url_for('user_board', username = user.username, unique_id=collection.unique_id)}}" class="board-card-link">
             <div class="panel-body" style="margin-bottom:75px;">
-            <h4 style="margin-bottom:auto">{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h4>
-            <p><small>{{collection.collection_items.all()|count}} items {% if collection.is_public%}public 🔓{%else%} private 🔐{%endif%}</small></p>
+              <h4 style="margin-bottom:auto">{% if collection.title %}{{collection.title}}{%else%}Untitled{%endif%}</h4>
+              <p><small>{{collection.collection_items.all()|count}} items {% if collection.is_public%}public 🔓{%else%} private 🔐{%endif%}</small></p>
+            </div>
           </a>
-          </div>
           <div class="panel-footer text-align text-right" style="border-top:none; background-color:white;">
             <div class="btn-group dropup">
               <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
