@@ -2,6 +2,11 @@
 {% block content %}
 {% for item in user.collections%}
 {{url}}
-<div class="panel panel-default widget-card"><a href = "{{url_for('chrome_extension_redirect', id = item.id, url = session.get('url_from_widget'))}}" class="widget-card-link">{{item.title}}<small>{{item.collection_items.all()|count}} items</small></div>
+<div class="row">
+  <div class="col-md-2 col-md-offset-5">
+    <div class="panel panel-default widget-card"><a href = "{{url_for('chrome_extension_redirect', id = item.id, url = session.get('url_from_widget'))}}" class="widget-card-link">{{item.title}} <small>{{item.collection_items.all()|count}} items</small></a></div>
+  </div>
+</div>
+
 {%endfor%}
 {%endblock%}
