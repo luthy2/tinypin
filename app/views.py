@@ -279,7 +279,6 @@ def chrome_extension_redirect():
     collection_id = request.args.get("id")
     url = request.args.get("url")
     collection  = Collection.query.filter(Collection.id == collection_id).first()
-    print collection, url
     if collection and url and g.user == collection.creator:
         collection.append_child(CollectionItem(parent=collection, content=str(url)))
         cache_request(url)
