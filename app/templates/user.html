@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <h4>{{user.username}} {% if user.username|string()==g.user.username|string()%}(you) <small><a href = "{{url_for('edit_user', username = user.username)}}"> settings</a> quick-add bookmarklet <a href = "javascript: window.location= 'http://tinypin.herokuapp.com/add-widget?='+encodeURIComponent(window.location.href)" class="btn btn-default btn-sm">add to tinypin</a></small></h4>{%else%} <small>Public Boards</small>{%endif%}
+      <h4>{{user.username}} {% if user.username|string()==g.user.username|string()%}(you) <small><a href = "{{url_for('edit_user', username = user.username)}}"> settings</a> quick-add bookmarklet <a href = "javascript: window.location= 'http://tinypin-staging.herokuapp.com/add-widget?='+encodeURIComponent(window.location.href)" class="btn btn-default btn-xs">add to tinypin</a></small></h4>{%else%} <small>Public Boards</small>{%endif%}
     </div>
 
   </div>
