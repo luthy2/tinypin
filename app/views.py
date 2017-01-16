@@ -272,19 +272,32 @@ def chrome_extension():
     #TODO make sure that we actually get a URL here, otherwise this will break
     url = request.args.get("url")
     session['url_from_widget'] = url
+    session['title'] = title
     return render_template("add-widget.html", user = user, url= url)
 
 @app.route("/add-widget/redirect")
 def chrome_extension_redirect():
     collection_id = request.args.get("id")
     url = request.args.get("url")
-    collection  = Collection.query.filter(Collection.id == collection_id).first()
+    collection = None
+
+    if collection_id:
+        collection  = Collection.query.filter(Collection.id == collection_id).first()
+    else:
+        collection = Collection()
+        user = g.user
+        collection.creator = user
+        collection.append_child(CollectionItem(parent=collection, content=str(item)))
+        db.session.add(collection)
+        db.session.commit()
+
     if collection and url and g.user == collection.creator:
         collection.append_child(CollectionItem(parent=collection, content=str(url)))
         cache_request(url)
         db.session.add(collection)
         db.session.commit()
         return redirect(url)
-    # else:
-    #     #TODO
-    #     pass
+
+    else:
+        #this should be improved
+        return abort(404)
