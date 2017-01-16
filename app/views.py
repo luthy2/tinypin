@@ -272,7 +272,6 @@ def chrome_extension():
     #TODO make sure that we actually get a URL here, otherwise this will break
     url = request.args.get("url")
     session['url_from_widget'] = url
-    session['title'] = title
     return render_template("add-widget.html", user = user, url= url)
 
 @app.route("/add-widget/redirect")
@@ -287,6 +286,7 @@ def chrome_extension_redirect():
         collection = Collection()
         user = g.user
         collection.creator = user
+        collection.title = request.args.get('title')
         collection.append_child(CollectionItem(parent=collection, content=str(item)))
         db.session.add(collection)
         db.session.commit()
