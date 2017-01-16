@@ -290,6 +290,7 @@ def chrome_extension_redirect():
         collection.append_child(CollectionItem(parent=collection, content=str(url)))
         db.session.add(collection)
         db.session.commit()
+        return redirect(url)
 
     if collection and url and g.user == collection.creator:
         collection.append_child(CollectionItem(parent=collection, content=str(url)))
