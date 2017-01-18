@@ -80,7 +80,7 @@
                 {%if collection.timestamp%}{{collection.fmt_timestamp()}} {%endif%}
               </li>
               <li>
-                <span class="glyphicon glyphicon-link" id ="showShareLink"></span><p id = "shareLink" class="hidden">Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></span></p>
+                <a  id ="showShareLink" href =# class="btn btn-default btn-xs"><span class="glyphicon glyphicon-link" ></span></a><p id="shareLink" class="hidden">Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></p>
               </li>
             </ul>
           </div>
@@ -111,8 +111,8 @@
     console.log('layout render')
   });
 
-  $('#showShareLink').on('click', function(){
-    $("#shareLink").show()
+  $("#showShareLink").on("click", function(){
+  	$("#shareLink").toggle()
   });
 </script>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
