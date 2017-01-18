@@ -32,7 +32,7 @@
 <div class="container">
   <div id="loader" class="loader">Loading...</div>
   <div class="row" id ="collectionMain">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-6 col-md-offset-3">
       <div class="row">
         <div class="col-xs-12">
         {% if collection%}
@@ -41,31 +41,34 @@
                 {{collection.title}}
                 <small>
                   {% if collection.is_public %}
-                    <a class="link-no-style" href="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is public. Anyone can view it.">
+                    <a class="link-no-style" href="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="This board is public. Anyone can view it.">
                        🔓
                     </a>
                     {%else%}
-                      <a class="link-no-style" href ="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is private. It is hidden from search indexes, and only those with the unique url can view it.">
+                      <a class="link-no-style" href ="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="This board is private. It is hidden from search indexes, and only those with the unique url can view it.">
                          🔒
                       </a>
                     {%endif%}
-                  <a href ="{{url_for('edit', unique_id=collection.unique_id)}}">
+                  <a href ="{{url_for('edit', unique_id=collection.unique_id)}}" class="btn btn-default btn-xs">
                     {% if g.user and collection.creator == g.user %}edit{%endif%}
                   </small>
                 </a>
               </h1>
             {% else %}
-              <h1>Untitled                  <small> {% if collection.is_public %}
-                                  <span data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is public. Anyone can view it.">
-                                     🔓
-                                  </span>
-                                  {%else%}
-                                    <a class="link-no-style" href ="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is private. It is hidden from search indexes, and only those with the unique url can view it.">
-                                       🔒
-                                    </span>
-                                  {%endif%}
-                                </small>
-                                  {% if g.user and collection.creator == g.user %}<a href ="{{url_for('edit', unique_id = collection.unique_id)}}"><small>edit</small>{%endif%}</a></h1>
+              <h1>Untitled
+                <small>
+                  {% if collection.is_public %}
+                  <span data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is public. Anyone can view it.">
+                    🔓
+                  </span>
+                  {%else%}
+                  <span class="link-no-style" href ="#" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="top" data-content="This board is private. It is hidden from search indexes, and only those with the unique url can view it.">
+                    🔒
+                  </span>
+                  {%endif%}
+                </small>
+                {% if g.user and collection.creator == g.user %}<a href ="{{url_for('edit', unique_id = collection.unique_id)}}" class="btn btn-default btn-xs"><small>edit</small>{%endif%}</a>
+              </h1>
             {% endif %}
             <ul class="list-inline board-details">
               <li>
@@ -74,12 +77,11 @@
                 </p>
               </li>
               <li>
-                {{collection.collection_items.all()|count}} items
-              </li>
-              <li>
                 {%if collection.timestamp%}{{collection.fmt_timestamp()}} {%endif%}
               </li>
-              <li><p>Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></span></p></li>
+              <li>
+                <span class="glyphicon glyphicon-link" id ="showShareLink"></span><p id = "shareLink" class="hidden">Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></span></p>
+              </li>
             </ul>
           </div>
         </div>
@@ -108,6 +110,10 @@
     $("#collectionMain").show()
     console.log('layout render')
   });
+
+  $('#showShareLink').on('click' function(){
+    $("shareLink").show()
+  })
 </script>
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
 <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-582b644f396174ac"></script>
