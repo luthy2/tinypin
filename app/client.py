@@ -65,7 +65,7 @@ def get_content(url):
             return render_template("article.html", title = resp.get("title"), image=resp.get("thumbnail_url"), description = resp.get("description"), _url=resp.get("url"), provider = resp.get("provider_name"))
         elif resp.get("type")  == "photo":
             print "photo"
-            return render_template("photo.html", _url = str(resp["url"]), source = url)
+            return render_template("photo.html", _url = str(resp.get("url")), source = url)
         else:
             return render_nostyle(url)
     else:
