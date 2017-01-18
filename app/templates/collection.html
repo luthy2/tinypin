@@ -80,7 +80,7 @@
                 {%if collection.timestamp%}{{collection.fmt_timestamp()}} {%endif%}
               </li>
               <li>
-                <a  id ="showShareLink" href =# class="btn btn-default btn-xs"><span class="glyphicon glyphicon-link" ></span></a><p id="shareLink" class="hidden">Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></p>
+                <a id ="showShareLink" href =# class="btn btn-default btn-xs"><span class="glyphicon glyphicon-link" ></span></a><p id="shareLink" style="display:hidden;">Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></p>
               </li>
             </ul>
           </div>
