@@ -78,19 +78,6 @@
             </ul>
           </div>
         </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2 col-xs-12">
-          <ul class="list-inline board-details">
-            <li>
-              <a href ="{{url_for('edit', unique_id=collection.unique_id)}}" class="btn btn-default btn-xs">
-                {% if g.user and collection.creator == g.user %}edit{%endif%}
-              </a>
-            </li>
-            <li>
-              <a id ="showShareLink" href =# class="btn btn-default btn-xs"><span class="glyphicon glyphicon-link" ></span></a><span id="shareLink" style="display:none;">Share shortlink <input type="text" value="{{url_for('board', unique_id = collection.unique_id,  _external=True)}}" size="35px;" onclick="this.focus();this.select()" readonly="readonly"></span>
-            </li>
-          </ul>
-        </div>
       </div>
       <div class="masonry row">
          {% set items = collection.collection_items%}
