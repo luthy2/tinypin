@@ -10,6 +10,8 @@ import client
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(), unique = True)
+    display_name = db.Column(db.String())
+    profile_img_url = db.Column(db.String())
     pw_hash = db.Column(db.String())
     email = db.Column(db.String(), unique = True)
     email_token = db.Column(db.String())

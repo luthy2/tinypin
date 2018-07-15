@@ -59,7 +59,6 @@ def api_create_collection():
         collection = Collection.query.filter_by(unique_id = data.get("unique_id")).first()
         collection.title = data.get('title', None)
         collection.is_public = data.get('is_public')
-        collection.timestamp = datetime.utcnow()
         layout = data.get('layout')
         if layout == 'one':
             collection.collection_layout = 'col-sm-6 col-sm-offset-3'
@@ -78,6 +77,7 @@ def api_create_collection():
 
     else:
         collection = Collection()
+        collection.timestamp = datetime.utcnow()
         user = g.user
         if user:
             collection.creator = user
@@ -288,6 +288,7 @@ def chrome_extension_redirect():
         collection.creator = user
         collection.title = request.args.get('title')
         collection.append_child(CollectionItem(parent=collection, content=str(url)))
+        cache_request(url)
         db.session.add(collection)
         db.session.commit()
         return redirect(url)
