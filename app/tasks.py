@@ -22,6 +22,6 @@ def cache_urls(urls):
     for batch in list(chunks(not_cached_urls)):
         resp = cli.oembed(batch, raw = True, words=30)
         for i in resp:
-            c = redis_cache.set(i.original_url, i.get('raw'))
+            c = redis_cache.set(i.get(original_url), i.get('raw'))
         print 'Item cached', c
     return True
